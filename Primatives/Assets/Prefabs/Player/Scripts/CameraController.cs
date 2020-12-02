@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     //panLimit.x = x pnaLimit.y = z
     public Vector2 panLimit;
     //Variable for the speed at which the camera will scroll
-    public float scrollSpeed = 2f;
+    public float scrollSpeed = 200f;
 
     public float minY = 20f;
 
