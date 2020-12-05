@@ -21,8 +21,6 @@ public class UnitScript : MonoBehaviour
         parent = GetComponent<ObjectScript>();
         PatrolPositions = new LinkedList<Vector3>();
         Agent = GetComponent<NavMeshAgent>();
-        //float temp = parent.GetFloatVariable("WalkSpeed");
-        //Debug.Log(temp);
     }
 
     // Update is called once per frame
@@ -34,7 +32,6 @@ public class UnitScript : MonoBehaviour
         if (PositionsEqual(CurrentPosition,GoalPosition))
         {
             FollowPatrol();
-            Debug.Log("True");
         }
         //Setting the destination of the navmeshagent to the GoalPosition
         Agent.destination = GoalPosition;
@@ -73,7 +70,6 @@ public class UnitScript : MonoBehaviour
                 if (PositionsEqual(GoalPosition,Previous))
                 {
                     SetGoalPoint(position);
-                    Debug.Log("Next Position");
                     return;
                 }
                 Previous = position;
@@ -84,7 +80,7 @@ public class UnitScript : MonoBehaviour
         }
     }
     //Function should compare the parameter Vector3 of Position1 to the Vector3 of Position2
-    private bool PositionsEqual(Vector3 Position1,Vector3 Position2)
+    public bool PositionsEqual(Vector3 Position1,Vector3 Position2)
     {
         return ((Position1.x <= Position2.x + 0.5f && Position1.x >= Position2.x - 0.5f) && (Position1.z <= Position2.z + 0.5f && Position1.z >= Position2.z - 0.5f));
     }

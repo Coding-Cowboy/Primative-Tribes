@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    //public Vector3 TestGoalPosition;
+    public Vector3 TestGoalPosition;
     public List<Vector3> PatrolPositions;
     public UnitScript Unit;
-    private bool flag = false;
+    private bool flag = true;
     // Start is called before the first frame update
     void Start()
     {
-        //Unit.SetGoalPoint(TestGoalPosition);
+        Unit.SetGoalPoint(TestGoalPosition);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Unit.GetCurrentPosition().Equals(TestGoalPosition))
+        if (Unit.PositionsEqual(Unit.GetCurrentPosition(),TestGoalPosition))
             flag = true;
+        else
+            flag = false;
+
+
         if(flag)
         {
             foreach(Vector3 position in PatrolPositions)
@@ -26,8 +30,6 @@ public class Test : MonoBehaviour
                 Unit.SetPatrol(position);
             }
             flag = false;
-            //Set the Goal Point to the first element in the array to start the patrol
-            Unit.SetGoalPoint(PatrolPositions[0]);
         }
     }
     //public void TaskOnClick()

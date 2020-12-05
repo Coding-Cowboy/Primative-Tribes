@@ -536,8 +536,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -1297198389493872605, guid: 85097093feeef86418b79e13270c2762, type: 3}
+      propertyPath: TestGoalPosition.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -1297198389493872605, guid: 85097093feeef86418b79e13270c2762, type: 3}
       propertyPath: TestGoalPosition.z
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: -1297198389493872605, guid: 85097093feeef86418b79e13270c2762, type: 3}
       propertyPath: PatrolPositions.Array.size
