@@ -12,6 +12,7 @@ public class Test : MonoBehaviour
     void Start()
     {
         Unit.SetGoalPoint(TestGoalPosition);
+        Unit.SetTeam("1");
     }
 
     // Update is called once per frame
