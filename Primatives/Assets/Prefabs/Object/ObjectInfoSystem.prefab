@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8918345670138151246}
-  - component: {fileID: 4058081998634288995}
+  - component: {fileID: 6228609157832559772}
   m_Layer: 0
   m_Name: ObjectInfoSystem
-  m_TagString: Untagged
+  m_TagString: InfoSystem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4058081998634288995
+--- !u!114 &6228609157832559772
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,10 +40,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 8918345670138151241}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a573abbf249a5d4cb8d43f4fe8d5cb7, type: 3}
+  m_Script: {fileID: 11500000, guid: 49ce66404f9a9c54e8bb5b70fa7e6a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floats: []
-  ints: []
-  strings: []
-  gameobjects: []
+  Units:
+  - UnitID: 1
+    Name: Warrior
+    isBuilder: 0
+    isHealer: 0
+    floats:
+    - Name: MovementSpeed
+      Value: 4.5
+    - Name: LookDistance
+      Value: 5.5
+    - Name: AttackSpeed
+      Value: 3.5
+    ints:
+    - Name: Health
+      Value: 200
+    Object: {fileID: 6852530814182375312, guid: 12a4c14e672c00b4b840f937d824b890, type: 3}
+  - UnitID: 
+    Name: 
+    isBuilder: 0
+    isHealer: 0
+    floats: []
+    ints: []
+    Object: {fileID: 0}

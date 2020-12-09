@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     //variable for the speed at which the camera will span
@@ -15,9 +16,82 @@ public class CameraController : MonoBehaviour
     public float minY = 20f;
 
     public float maxY = 120f;
-
+    private Camera PlayerCamera;
+    private Vector3 StartDragPosition;
+    private GameObject HitObject;
+    void Start()
+    {
+        PlayerCamera = GetComponentInChildren<Camera>();
+        if (PlayerCamera != null)
+            Debug.Log("Good");
+    }
     // Update is called once per frame
     void Update()
+    {
+        CameraMovement();
+        MouseClick();
+        MouseUnclick();
+        UnitMove();
+    }
+
+
+    private void MouseClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            //Clear the previous HitObject
+            HitObject = null;
+
+            //Perform the Raycast to see what GameObject they Hit or where to start dragging
+            Debug.Log("Left Click");
+            RaycastHit hit = RayCasting();
+            Debug.Log("Hit " + hit.collider.gameObject.name);
+
+            StartDragPosition = hit.point; 
+        }
+    }
+    private void MouseUnclick()
+    {    
+        if (Input.GetMouseButtonUp(0))
+        {
+            RaycastHit hit = RayCasting();
+            //If the player has dragged the mouse then get all GmaeObjects in the drawn Box, also returns
+            if (StartDragPosition != hit.point)
+            {
+                MouseDragging();
+                return;
+            }
+            if (hit.collider.gameObject.tag == "Unit")
+            {
+                //If the player only selected 
+                HitObject = hit.collider.gameObject;
+            }
+            else if (hit.collider.gameObject.tag == "Building")
+            {
+                HitObject = hit.collider.gameObject;
+            }
+            else if (hit.collider.gameObject.tag == "Other")
+            {
+                HitObject = hit.collider.gameObject;
+            }
+        }
+    }
+
+
+    private void MouseDragging()
+    {
+
+    }
+    private void UnitMove()
+    {
+        //If the HitObject is not null then perform a simple move
+        if (HitObject != null && HitObject.tag == "Unit" && Input.GetMouseButtonDown(1))
+        {
+            RaycastHit hit = RayCasting();
+            HitObject.GetComponent<UnitScript>().SetGoalPoint(hit.point, true);
+        }
+    }
+    private void CameraMovement()
     {
         //Storing the position in a temp variable
         Vector3 pos = transform.position;
@@ -52,5 +126,14 @@ public class CameraController : MonoBehaviour
 
         //Applying the position after taking user inputs
         transform.position = pos;
+    }
+    private RaycastHit RayCasting()
+    {
+        //Perform Raycast to see if the mouse up is at a different point from the mousedown
+        Ray ray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        // Casts the ray and get the first game object hit
+        Physics.Raycast(ray, out hit);
+        return hit;
     }
 }

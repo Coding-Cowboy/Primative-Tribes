@@ -11,27 +11,27 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Unit.SetGoalPoint(TestGoalPosition);
+        //Unit.SetGoalPoint(TestGoalPosition,true);
         Unit.SetTeam("1");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Unit.PositionsEqual(Unit.GetCurrentPosition(),TestGoalPosition))
-            flag = true;
-        else
-            flag = false;
+        //if (Unit.PositionsEqual(Unit.GetCurrentPosition(),TestGoalPosition))
+        //    flag = true;
+        //else
+        //    flag = false;
 
 
-        if(flag)
-        {
-            foreach(Vector3 position in PatrolPositions)
-            {
-                Unit.SetPatrol(position);
-            }
-            flag = false;
-        }
+        //if(flag)
+        //{
+        //    foreach(Vector3 position in PatrolPositions)
+        //    {
+        //        Unit.SetPatrol(position);
+        //    }
+        //    flag = false;
+        //}
     }
     //public void TaskOnClick()
     //{

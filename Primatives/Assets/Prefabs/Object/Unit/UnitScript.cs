@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,13 +21,14 @@ public class UnitScript : MonoBehaviour
     [System.Serializable]
     public class Info
     {
+        public string UnitID;
+        public string Team;//Change to private when creation from the mouse is implemented
         public string ID;
-        private string Team;
-        private string Name;
+        public string Name;
         private bool isBuilder;
         private bool isHealer;
-        private List<FloatPool> floats;
-        private List<IntPool> ints;
+        private List<FloatPool> floats = new List<FloatPool>();
+        private List<IntPool> ints = new List<IntPool>();
         private GameObject Object;
         public void SetUnitInfoInformation(string Name, bool isBuilder, bool isHealer, GameObject Object)
         {
@@ -45,6 +44,14 @@ public class UnitScript : MonoBehaviour
             NewEntry.Value = Value;
             this.floats.Add(NewEntry);
         }
+        //value will return -1.0f if the attribute is not within the List
+        public float GetFloat(string Name)
+        {
+            foreach (FloatPool pool in floats)
+                if (pool.Name == Name)
+                    return pool.Value;
+            return -1.0f;
+        }
         public void AddInt(string Name, int Value)
         {
             IntPool NewEntry = new IntPool();
@@ -52,61 +59,86 @@ public class UnitScript : MonoBehaviour
             NewEntry.Value = Value;
             this.ints.Add(NewEntry);
         }
+        public int GetInt(string Name)
+        {
+            foreach (IntPool pool in ints)
+                if (pool.Name == Name)
+                    return pool.Value;
+            return -1;
+        }
         internal void SetTeam(string Team)
         {
             this.Team = Team;
         }
         public void toString()
         {
-            Debug.Log("Unit Information"); 
-            Debug.Log($"Unit ID: {ID}");
-            Debug.Log($"Unit Team: {Team}");
-            Debug.Log($"Unit Name: {Name}");
-            Debug.Log($"Unit isBuilder: {isBuilder}");
-            Debug.Log($"Unit isHealer: {isHealer}");
-            foreach(FloatPool pool in floats)
+            string Output = "";
+            Output += "Unit Information\n";
+            Output += $"Unit ID: {UnitID}\n";
+            Output += $"Unit Team: {Team}\n";
+            Output += $"Unit Name: {Name}\n";
+            Output += $"Unit isBuilder: {isBuilder}\n";
+            Output += $"Unit isHealer: {isHealer}\n";
+            foreach (FloatPool pool in floats)
             {
-                Debug.Log($"Variable Name: {pool.Name} and Value: {pool.Value}");
+                Output += $"Variable Name: {pool.Name} and Value: {pool.Value}\n";
             }
             foreach (IntPool pool in ints)
             {
-                Debug.Log($"Variable Name: {pool.Name} and Value: {pool.Value}");
+                Output += $"Variable Name: {pool.Name} and Value: {pool.Value}\n";
             }
+            Debug.Log(Output);
         }
     }
-    public ObjectScript InfoSystem;//Variable of the parent
+    private ObjectScript InfoSystem;//Variable of the parent
     public Info UnitInfo;//Information about Unit from the ObjectInfoSystem
+    public GameManager GM;//GameManager for the Game
+    public State CurrentState;
+    public enum State { WAITING, FLEEING, MOVING, PATROLING, GATHERING, FIGHTING, BUILDING, DYING };//States that a unit can be in in the game.
     private Vector3 CurrentPosition;//Current Location of the object
     private Vector3 GoalPosition;//Location that the unit is moving to
     private LinkedList<Vector3> PatrolPositions;//LinkedList for if the unit is patroling between a set of locations
     private NavMeshAgent Agent;//NavMeshAgent for the Unit to Move
-    
-
-    private enum State { WAITING, FLEEING, MOVING, FIGHTING, BUILDING, DYING};//States that a unit can be in in the game.
+    private GameObject NearestEnemy;//The closest enemy that the GM was able to find at that frame
+    private float Timer = 1f;//Timer for checking for enemies
+    public float SpeedMultiplier;
     // Start is called before the first frame update
     void Start()
     {
         //Collection Initialization
         //May Refactor to have a repo that the unit can access to get what information that they need.
-        InfoSystem = GetComponent<ObjectScript>();
         PatrolPositions = new LinkedList<Vector3>();
+        InfoSystem = GameObject.FindGameObjectWithTag("InfoSystem").GetComponent<ObjectScript>();
         Agent = GetComponent<NavMeshAgent>();
 
         RetrieveInfo();
+        //Setting the speed that a unit walks
+        float Speed = UnitInfo.GetFloat("MovementSpeed");
+        Agent.speed = Speed > -1.0f ? Speed : 2.5f;//Checks to see if the speed is not 0.0f and sets the agent speed to that value
     }
 
     // Update is called once per frame
     void Update()
     {
+        Timer -= Time.deltaTime;
         //Get Current Position
         CurrentPosition = transform.position;
         //Check to see if the unit has hit the goal position for the patrol
-        if (PositionsEqual(CurrentPosition,GoalPosition))
+        if (PositionsEqual(CurrentPosition, GoalPosition))
         {
             FollowPatrol();
+            //Checks to see if 1 second has passed to call the EnemyInSights function of the GameManager
+            
+        }
+        if (Timer < 0.0f)//add if the state is waiting or patrolling
+        {
+            //Debug.Log("Timer");
+            Timer = 1f;
         }
         //Setting the destination of the navmeshagent to the GoalPosition
+        //Also setting the values for movement and looking distance
         Agent.destination = GoalPosition;
+        Agent.speed = Agent.speed * SpeedMultiplier;
 
     }
     //Function to call every time a unit is selected and has a patrol to add to the array.
@@ -118,10 +150,13 @@ public class UnitScript : MonoBehaviour
     {
         this.PatrolPositions.Clear();
     }
-    public void SetGoalPoint(Vector3 NewPosition)
+    public void SetGoalPoint(Vector3 NewPosition, bool isNotPatrol)
     {
         this.GoalPosition = NewPosition;
-        Debug.Log($"New Position: {GoalPosition}");
+        //Sets the state to Moving if not in PATROLING state
+        if (isNotPatrol)
+            CurrentState = State.MOVING;
+
     }
     public Vector3 GetCurrentPosition()
     {
@@ -137,32 +172,40 @@ public class UnitScript : MonoBehaviour
             Vector3 Previous = new Vector3(9999f, 9999f, 9999f);//Setting position to a point in the shadow realm
             //Iterate through each point and get the next point after the current point.
             //*Note* should not clear if attacking enemy
-            foreach( Vector3 position in PatrolPositions)
+            foreach (Vector3 position in PatrolPositions)
             {
-                if (PositionsEqual(GoalPosition,Previous))
+                if (PositionsEqual(GoalPosition, Previous))
                 {
-                    SetGoalPoint(position);
+                    SetGoalPoint(position,false);
                     return;
                 }
                 Previous = position;
             }
-            Debug.Log("First Position");
+            //Debug.Log("First Position");
             //if did not return from foreach loop, then set the GoalPosition to the first element in array.
             GoalPosition = PatrolPositions.First();
         }
     }
     //Function should compare the parameter Vector3 of Position1 to the Vector3 of Position2
-    public bool PositionsEqual(Vector3 Position1,Vector3 Position2)
+    public bool PositionsEqual(Vector3 Position1, Vector3 Position2)
     {
         return ((Position1.x <= Position2.x + 0.5f && Position1.x >= Position2.x - 0.5f) && (Position1.z <= Position2.z + 0.5f && Position1.z >= Position2.z - 0.5f));
     }
     private void RetrieveInfo()
     {
-        InfoSystem.GetUnit(UnitInfo.ID, this);//Sending Id to get the Information about this Unit.
+        InfoSystem.GetUnit(UnitInfo.UnitID, this);//Sending Id to get the Information about this Unit.
     }
     public void SetTeam(string Team)
     {
         UnitInfo.SetTeam(Team);
     }
-    
+    private void WaitingState()
+    {
+        //only scan to see if there are nearby enemies
+        NearestEnemy = GM.GetNearestEnemy(UnitInfo.Team, UnitInfo.GetFloat("LookDistance"), CurrentPosition);
+        if (NearestEnemy != null)
+            //Go to the Moving State(and then the fighting state)
+            Debug.Log("Found Enemy");
+    }
+
 }
