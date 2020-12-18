@@ -7,7 +7,7 @@ public class Test : MonoBehaviour
     public Vector3 TestGoalPosition;
     public List<Vector3> PatrolPositions;
     public UnitScript Unit;
-    private bool flag = true;
+    //private bool flag = true;
     // Start is called before the first frame update
     void Start()
     {

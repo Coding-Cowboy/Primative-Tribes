@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3125443225603686247}
   - component: {fileID: 32396758994464843}
   - component: {fileID: -1297198389493872605}
-  - component: {fileID: 8237259730755859764}
   - component: {fileID: 4414604047159639322}
+  - component: {fileID: 5206287469782470135}
   m_Layer: 10
   m_Name: Unit
   m_TagString: Unit
@@ -100,6 +100,7 @@ MonoBehaviour:
   UnitInfo:
     UnitID: 
     Team: 
+    ID: 
     Name: 
   GM: {fileID: 1498480667482211997, guid: 55c170ecde6efdf4d9477e580e294502, type: 3}
   CurrentState: 0
@@ -119,20 +120,6 @@ MonoBehaviour:
   TestGoalPosition: {x: 0, y: 0, z: 0}
   PatrolPositions: []
   Unit: {fileID: 32396758994464843}
---- !u!136 &8237259730755859764
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3125443225603686241}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 1.2913809
-  m_Height: 2.5827618
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0.0058033466, z: -0.00000011920929}
 --- !u!195 &4414604047159639322
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -155,3 +142,17 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!64 &5206287469782470135
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3125443225603686241}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
