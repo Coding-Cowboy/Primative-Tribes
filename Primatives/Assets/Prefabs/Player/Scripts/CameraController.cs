@@ -43,12 +43,17 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         PlayerCamera = GetComponentInChildren<Camera>();
-
-        Marquee = new GameObject("Marquee");
         selectionMesh = new Mesh();
+        MarqueeCreation();
+    }
+
+    private void MarqueeCreation()
+    {
+        Marquee = new GameObject("Marquee");
         Marquee.AddComponent<MeshCollider>();
         Marquee.AddComponent<MarqueeScript>();
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -56,7 +61,7 @@ public class CameraController : MonoBehaviour
         MouseClick();
         MouseDragging();
         MouseUnclick();
-        if (SelectedObjects.Count != 0)
+        if (SelectedObjects.Count >= 2)
             Debug.Log("New Squad");
         UnitMove();
     }
@@ -211,6 +216,10 @@ public class CameraController : MonoBehaviour
                 //{
                 //    Debug.Log($"vector:{vector}");
                 //}
+
+                ///Section is for creating a new selection box and marquee, then setting those to be colliders that the objects will be able to be selected with. finally they will get destroyed to remove the collider from the scene
+                selectionBox = new MeshCollider();
+                MarqueeCreation();
                 selectionBox = Marquee.GetComponent<MeshCollider>();
                 selectionBox.sharedMesh = selectionMesh;
                 selectionBox.convex = true;
@@ -220,8 +229,9 @@ public class CameraController : MonoBehaviour
                 {
                     SelectedObjects.Clear();
                 }
-
-                //Destroy(selectionBox, 0.02f);
+                //Clear the selection box
+                Destroy(selectionBox, 0.02f);
+                Destroy(Marquee, 0.02f);
             } //End of Marquee Draw
             isDragging = false;
         }
@@ -367,7 +377,7 @@ public class CameraController : MonoBehaviour
         return selectionMesh;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void EnteredTrigger(Collider other)
     {
         SelectedObjects.Add(other.gameObject);
     }
