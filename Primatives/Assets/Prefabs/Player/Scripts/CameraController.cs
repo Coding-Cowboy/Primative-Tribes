@@ -61,8 +61,6 @@ public class CameraController : MonoBehaviour
         MouseClick();
         MouseDragging();
         MouseUnclick();
-        if (SelectedObjects.Count >= 2)
-            Debug.Log("New Squad");
         UnitMove();
     }
     private void OnGUI()
@@ -128,7 +126,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             //Checks to see if the magnitude is within a range for dragging
-            if ((StartDragPosition - Input.mousePosition).magnitude > 10)
+            if ((StartDragPosition - Input.mousePosition).magnitude > 20)
             {
                 isDragging = true;
             }
@@ -142,7 +140,7 @@ public class CameraController : MonoBehaviour
             {
                 RaycastHit hit = RayCasting();
 
-                //Logic for creating a squad
+                //Logic for creating a squad for Units
                 if (hit.transform.gameObject.tag == "Unit")
                 {
                     if (Input.GetKey(KeyCode.LeftShift)) //Inclusive Selection
@@ -158,28 +156,43 @@ public class CameraController : MonoBehaviour
                                 SelectedObjects.Add(hit.transform.gameObject);
                             else
                             {
+                                foreach (GameObject gm in SelectedObjects)
+                                    gm.GetComponent<UnitScript>().SetRing(false);
                                 SelectedObjects.Clear();
                                 SelectedObjects.Add(hit.transform.gameObject);
                             }
                         }
+                        hit.transform.gameObject.GetComponent<UnitScript>().SetRing(true);
                     }
                     else //Exclusive Selection
                     {
+                        foreach (GameObject gm in SelectedObjects)
+                            gm.GetComponent<UnitScript>().SetRing(false);
                         SelectedObjects.Clear();
                         SelectedObjects.Add(hit.transform.gameObject);
+                        hit.transform.gameObject.GetComponent<UnitScript>().SetRing(true);
                     }
                 }
 
                 //Logic for selecting multiple buldings of the same type(Work on later)
 
                 //Logic for selection all "Other" Game objects in the drawbox(Due Later)
+
+                //Logic for if the Player clicked their UI
+                else if (hit.transform.gameObject.layer != 5)
+                    Debug.Log("UI Clicked");//Do Nothing
+                //The Player clicked on the ground
+                else
+                {
+                    foreach (GameObject gm in SelectedObjects)
+                        gm.GetComponent<UnitScript>().SetRing(false);
+                    SelectedObjects.Clear();
+                }
             }
             //Else if the player is still dragging
             else
             {
-                //verts = new Vector3[4];
                 verts = new Vector3[5];
-                //vecs = new Vector3[4];
                 int i = 0;
                 EndDragPosition = Input.mousePosition;
                 EndWorldPosition = RayCasting().point;
@@ -227,6 +240,9 @@ public class CameraController : MonoBehaviour
 
                 if (!Input.GetKey(KeyCode.LeftShift))
                 {
+                    foreach(GameObject gm in SelectedObjects)
+                        gm.GetComponent<UnitScript>().SetRing(false);
+
                     SelectedObjects.Clear();
                 }
                 //Clear the selection box
@@ -238,11 +254,12 @@ public class CameraController : MonoBehaviour
     }
     private void UnitMove()
     {
-        //If the HitObject is not null then perform a simple move
-        if (HitObject != null && HitObject.tag == "Unit" && Input.GetMouseButtonDown(1))
+        //If the SelectedObjects is not null and the first element is a Unit
+        if (SelectedObjects.Count > 0 && SelectedObjects[0].tag == "Unit" && Input.GetMouseButtonDown(1))
         {
             RaycastHit hit = RayCasting();
-            HitObject.GetComponent<UnitScript>().SetGoalPoint(hit.point, true);
+            foreach(GameObject unit in SelectedObjects)
+                unit.GetComponent<UnitScript>().SetGoalPoint(hit.point, true);
         }
     }
     private void CameraMovement()
@@ -380,5 +397,11 @@ public class CameraController : MonoBehaviour
     public void EnteredTrigger(Collider other)
     {
         SelectedObjects.Add(other.gameObject);
+        if (other.gameObject.tag == "Unit")
+            other.GetComponent<UnitScript>().SetRing(true);
+    }
+    public List<GameObject> GetSelectedObjects()
+    {
+        return this.SelectedObjects;
     }
 }

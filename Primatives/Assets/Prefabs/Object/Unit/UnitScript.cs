@@ -100,6 +100,7 @@ public class UnitScript : MonoBehaviour
     private LinkedList<Vector3> PatrolPositions;//LinkedList for if the unit is patroling between a set of locations
     private NavMeshAgent Agent;//NavMeshAgent for the Unit to Move
     private GameObject NearestEnemy;//The closest enemy that the GM was able to find at that frame
+    public GameObject SelectionRing;//Ring to be enabled when this unit is selected
     private float Timer = 1f;//Timer for checking for enemies
     public float SpeedMultiplier;
     // Start is called before the first frame update
@@ -115,6 +116,7 @@ public class UnitScript : MonoBehaviour
         //Setting the speed that a unit walks
         float Speed = UnitInfo.GetFloat("MovementSpeed");
         Agent.speed = Speed > -1.0f ? Speed : 2.5f;//Checks to see if the speed is not 0.0f and sets the agent speed to that value
+        SelectionRing.SetActive(false);
     }
 
     // Update is called once per frame
@@ -206,6 +208,11 @@ public class UnitScript : MonoBehaviour
         if (NearestEnemy != null)
             //Go to the Moving State(and then the fighting state)
             Debug.Log("Found Enemy");
+    }
+    public void SetRing(bool state)
+    {
+        SelectionRing.SetActive(state);
+
     }
 
 }
