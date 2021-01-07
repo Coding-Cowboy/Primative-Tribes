@@ -19,14 +19,18 @@ public class UISystem : MonoBehaviour
 
     //UI for Objects. Player Actions, Info, and SelectedObjects
     public Sprite ObjectIcon; //Will be for the Current First Object Selected
-    public enum ObjectType {Unit,Building,Object};
-    public ObjectType SelectedObjectType;
+    
 
     //Left Bottom Tabs
+    //Buttons for the patrols
+    public List<Button> UnitButtons;
+    private bool isPatrolling;
 
     //Middle Bottom Tabs
     public Image PanelImage;
     public TextMeshProUGUI PanelText;
+    public enum PanelType { Image, Info, Description };
+    public PanelType SelectedPanelType;
 
     //SelectedObjects List
     private List<GameObject> SelectedObjects;
@@ -34,12 +38,27 @@ public class UISystem : MonoBehaviour
     public CameraController PlayerCamScript;
     void Start()
     {
+        UnitButtonEnabler(false);
         SelectedObjects = new List<GameObject>();
         Debug.Log("Make an Image display the Camera Render to allow the full camera to be seen in the Body");
+        SelectedPanelType = PanelType.Image;
     }
 
     // Update is called once per frame
     void Update()
+    {
+        ResourcePanel();
+
+        //Update UI when the Player clicks on an Object
+        if(SelectedObjects.Count > 0)
+        {
+            TabClicked((int)SelectedPanelType);
+        }
+        //Gets the List of Selected Objects for the UI
+        //GetSelectedObjects();
+    }
+
+    private void ResourcePanel()
     {
         //Setting the Resources Panel
         ResourcesPane.SetText("Resources\n");
@@ -47,30 +66,69 @@ public class UISystem : MonoBehaviour
         {
             ResourcesPane.text += pool.Value > 0 ? $"{pool.Name}:{pool.Value}\n" : "";
         }
-        if(SelectedObjects.Count > 0 )
-        {
-            //Creating the UI for the first selected element for the Middle Bottom
-            if (SelectedObjects[0].tag == "Unit")
-                SelectedObjectType = ObjectType.Unit;
-        }
     }
-    private void GetSelectedObjects()
+
+    //Will Be called from the Player to set the SelectedObjects for the UI.
+    public void CopySelectedObjects(List<GameObject> SelectedObjects)
     {
-        SelectedObjects = PlayerCamScript.GetSelectedObjects();
+        foreach (GameObject Object in SelectedObjects)
+            this.SelectedObjects.Add(Object);
     }
-    public void TabClicked(Button Tab)
+    public void TabClicked(int type)
     {
-        if (Tab.name == "ImageTab")
+        PanelType Type = (PanelType)type;
+        //Creating the UI for the first selected element for the Middle Bottom
+        if (Type == PanelType.Image)
         {
-            PanelImage.sprite = ObjectIcon;
+            //If it is a Unit
+            if (SelectedObjects.Count > 0 && SelectedObjects[0].tag == "Unit")
+            {
+                PanelImage.sprite = SelectedObjects[0].GetComponent<UnitScript>().UnitInfo.GetIcon();
+                UnitButtonEnabler(true);
+            }
+            //No Object is Selected
+            else
+            {
+                PanelImage.sprite = ObjectIcon;
+                UnitButtonEnabler(false);
+            }
             PanelImage.preserveAspect = true;
             PanelText.text = "";
+            SelectedPanelType = Type;
         }
-        else if (Tab.name == "InfoTab")
+        else if (Type == PanelType.Info)
         {
-            PanelImage.sprite = null;
             PanelText.text = "Object Info\n";
-        }
+            //If it is a Unit
+            if (SelectedObjects.Count > 0 && SelectedObjects[0].tag == "Unit")
+            {
+                PanelText.text += SelectedObjects[0].GetComponent<UnitScript>().UnitInfo.toString();
+                UnitButtonEnabler(true);
+            }
+            //No objects are selected
+            else
+            {
+                PanelText.text += "No Object is selected.\n";
+                UnitButtonEnabler(false);
 
+            }
+            PanelImage.sprite = null;
+            SelectedPanelType = Type;
+        }
+    }
+    private void UnitButtonEnabler(bool flag)
+    {
+        foreach(Button button in UnitButtons)
+        {
+            button.enabled = flag;
+        }
+    }
+    public void UnitPatrol()
+    {
+        if (!isPatrolling)
+            isPatrolling = true;
+        else
+            isPatrolling = false;
+        Debug.Log(isPatrolling);
     }
 }

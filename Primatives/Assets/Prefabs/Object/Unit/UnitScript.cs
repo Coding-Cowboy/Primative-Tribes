@@ -30,12 +30,14 @@ public class UnitScript : MonoBehaviour
         private List<FloatPool> floats = new List<FloatPool>();
         private List<IntPool> ints = new List<IntPool>();
         private GameObject Object;
-        public void SetUnitInfoInformation(string Name, bool isBuilder, bool isHealer, GameObject Object)
+        private Sprite Icon;
+        public void SetUnitInfoInformation(string Name, bool isBuilder, bool isHealer, GameObject Object, Sprite Icon)
         {
             this.Name = Name;
             this.isBuilder = isBuilder;
             this.isHealer = isHealer;
             this.Object = Object;
+            this.Icon = Icon;
         }
         public void AddFloat(string Name, float Value)
         {
@@ -66,28 +68,33 @@ public class UnitScript : MonoBehaviour
                     return pool.Value;
             return -1;
         }
+        public Sprite GetIcon()
+        {
+            return this.Icon;
+        }
         internal void SetTeam(string Team)
         {
             this.Team = Team;
         }
-        public void toString()
+        public string toString()
         {
             string Output = "";
             Output += "Unit Information\n";
-            Output += $"Unit ID: {UnitID}\n";
+            //Output += $"Unit ID: {UnitID}\n";
             Output += $"Unit Team: {Team}\n";
             Output += $"Unit Name: {Name}\n";
             Output += $"Unit isBuilder: {isBuilder}\n";
             Output += $"Unit isHealer: {isHealer}\n";
             foreach (FloatPool pool in floats)
             {
-                Output += $"Variable Name: {pool.Name} and Value: {pool.Value}\n";
+                Output += $"{pool.Name}: {pool.Value}\n";
             }
             foreach (IntPool pool in ints)
             {
-                Output += $"Variable Name: {pool.Name} and Value: {pool.Value}\n";
+                Output += $"{pool.Name}: {pool.Value}\n";
             }
-            Debug.Log(Output);
+            //Debug.Log(Output);
+            return Output;
         }
     }
     private ObjectScript InfoSystem;//Variable of the parent

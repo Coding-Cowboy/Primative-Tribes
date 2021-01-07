@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 public class CameraController : MonoBehaviour
 {
     //variable for the speed at which the camera will span
@@ -39,7 +40,9 @@ public class CameraController : MonoBehaviour
     Vector3[] verts;
     Vector3[] vecs;
 
-
+    //UISystem for communicating to the UI for what to display
+    public UISystem PlayerUI;
+    private bool isPatrolling;//The flag for right clicks to register as a patrol or a single move order
     void Start()
     {
         PlayerCamera = GetComponentInChildren<Camera>();
@@ -61,6 +64,8 @@ public class CameraController : MonoBehaviour
         MouseClick();
         MouseDragging();
         MouseUnclick();
+        if (SelectedObjects.Count > 0)
+            CopySelectedObjects();
         UnitMove();
     }
     private void OnGUI()
@@ -179,7 +184,7 @@ public class CameraController : MonoBehaviour
                 //Logic for selection all "Other" Game objects in the drawbox(Due Later)
 
                 //Logic for if the Player clicked their UI
-                else if (hit.transform.gameObject.layer != 5)
+                else if (EventSystem.current.currentSelectedGameObject.tag == "UI")
                     Debug.Log("UI Clicked");//Do Nothing
                 //The Player clicked on the ground
                 else
@@ -400,8 +405,8 @@ public class CameraController : MonoBehaviour
         if (other.gameObject.tag == "Unit")
             other.GetComponent<UnitScript>().SetRing(true);
     }
-    public List<GameObject> GetSelectedObjects()
+    public void CopySelectedObjects()
     {
-        return this.SelectedObjects;
+        PlayerUI.CopySelectedObjects(SelectedObjects);
     }
 }

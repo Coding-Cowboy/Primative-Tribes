@@ -8,6 +8,7 @@ TagManager:
   - Unit
   - Building
   - Other
+  - UI
   layers:
   - Default
   - TransparentFX

@@ -41,6 +41,7 @@ public class ObjectScript : MonoBehaviour
         public List<FloatPool> floats;
         public List<IntPool> ints;
         public GameObject Object;
+        public Sprite Icon;
     }
     //public List<GameObjectPool> gameobjects;
     public List<UnitPool> Units;
@@ -72,7 +73,7 @@ public class ObjectScript : MonoBehaviour
             if (pool.UnitID == ID)
             {
                 //Perform Transfering of Data
-                Unit.UnitInfo.SetUnitInfoInformation(pool.Name, pool.isBuilder,pool.isHealer,pool.Object);
+                Unit.UnitInfo.SetUnitInfoInformation(pool.Name, pool.isBuilder,pool.isHealer,pool.Object, pool.Icon);
                 foreach (FloatPool fpool in pool.floats)
                 {
                     Unit.UnitInfo.AddFloat(fpool.Name, fpool.Value);

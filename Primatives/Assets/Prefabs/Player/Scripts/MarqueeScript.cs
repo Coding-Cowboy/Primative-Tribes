@@ -29,7 +29,7 @@ public class MarqueeScript : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("Trigger Stay");
+        //Debug.Log("Trigger Stay");
     }
     private void OnTriggerExit(Collider other)
     {

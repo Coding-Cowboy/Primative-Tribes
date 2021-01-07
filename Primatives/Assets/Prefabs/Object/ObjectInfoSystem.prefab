@@ -59,10 +59,20 @@ MonoBehaviour:
     - Name: Health
       Value: 200
     Object: {fileID: 6852530814182375312, guid: 12a4c14e672c00b4b840f937d824b890, type: 3}
-  - UnitID: 
-    Name: 
+    Icon: {fileID: 21300000, guid: 5aa0d71d789c93a468898d8acfcf2a09, type: 3}
+  - UnitID: 2
+    Name: Armored Warrior
     isBuilder: 0
     isHealer: 0
-    floats: []
-    ints: []
-    Object: {fileID: 0}
+    floats:
+    - Name: MovementSpeed
+      Value: 4.5
+    - Name: LookDistance
+      Value: 5.5
+    - Name: AttackSpeed
+      Value: 3.5
+    ints:
+    - Name: Health
+      Value: 200
+    Object: {fileID: 6852530814182375312, guid: 12a4c14e672c00b4b840f937d824b890, type: 3}
+    Icon: {fileID: 21300000, guid: 1815ea71c4e799e45b0db8899c240c4a, type: 3}

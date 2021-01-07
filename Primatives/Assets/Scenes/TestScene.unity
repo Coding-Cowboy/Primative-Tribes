@@ -631,6 +631,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1696208059 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1238051868598393435, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
+  m_PrefabInstance: {fileID: 1238051867651375547}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e7b2499db0781943819649875eafeb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &1859105879 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2254546524754865118, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
@@ -827,6 +838,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1859105879}
+    - target: {fileID: 1238051868614563691, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1238051868614563691, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1238051868614563691, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1670469925959095479, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -940,6 +963,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4790565095028504995, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4926290939822367431, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4926290939822367431, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4926290939822367431, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4926290939822367431, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4926290939822367431, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4926290939822367431, guid: 9c3d0346d93a92b4da36bf44ab2a0b7e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -1092,6 +1139,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2254546524754865118, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+      propertyPath: field of view
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 3324046550129060761, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1139,6 +1190,10 @@ PrefabInstance:
     - target: {fileID: 3972597233901637944, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031045673700966387, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+      propertyPath: m_EventMask.m_Bits
+      value: 7191
       objectReference: {fileID: 0}
     - target: {fileID: 5474590608583582837, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
       propertyPath: m_Camera
@@ -1172,6 +1227,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8112990051252548954, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+      propertyPath: PlayerUI
+      value: 
+      objectReference: {fileID: 1696208059}
     - target: {fileID: 8112990051252548954, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
       propertyPath: panLimit.x
       value: 40
