@@ -1,7 +1,7 @@
-- name: Build Unity
+-name: Build Unity
   # You may pin to the exact commit or the version.
   # uses: kuler90/build-unity@f732be2747ca7e16a72a5ba793da81d31f5a8f8b
-  uses: kuler90/build-unity@v1
+  uses: Coding-Cowboy/Primative-Tribes@v1
   with:
     # Path to Unity executable. UNITY_PATH env will be used if not provided
     unity-path: # optional
