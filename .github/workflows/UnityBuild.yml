@@ -1,0 +1,31 @@
+- name: Build Unity
+  # You may pin to the exact commit or the version.
+  # uses: kuler90/build-unity@f732be2747ca7e16a72a5ba793da81d31f5a8f8b
+  uses: kuler90/build-unity@v1
+  with:
+    # Path to Unity executable. UNITY_PATH env will be used if not provided
+    unity-path: # optional
+    # Path to Unity project
+    project-path: # optional, default is ${{ github.workspace }}
+    # Build target
+    build-target: 
+    # Path to build output. Only for default build method
+    build-path: # optional
+    # Set application version. Only for default build method
+    build-version: # optional
+    # Set application build number. Only for default build method
+    build-number: # optional
+    # Set scripting define symbols. For example, RELEASE_VERSION;ENG_VERSION. Only for default build method
+    build-defines: # optional
+    # The base64 contents of the android keystore file. Only for default build method
+    android-keystore-base64: # optional
+    # The android keystore password. Only for default build method
+    android-keystore-pass: # optional
+    # The android keyalias name. Only for default build method
+    android-keyalias-name: # optional
+    # The android keyalias password. Only for default build method
+    android-keyalias-pass: # optional
+    # Path to build method. For example, MyEditorScript.PerformBuild. Default build method will be used if not provided
+    build-method: # optional
+    # Custom arguments for build method
+    build-method-args: # optional
