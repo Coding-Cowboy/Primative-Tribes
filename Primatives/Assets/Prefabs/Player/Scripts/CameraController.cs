@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 public class CameraController : MonoBehaviour
 {
     //variable for the speed at which the camera will span
@@ -21,11 +23,11 @@ public class CameraController : MonoBehaviour
     //Starting Position that the mouse is dragging from.
     private Vector3 StartDragPosition = Vector3.zero;//P1 from example
     private Vector3 StartWorldPosition;
-    private Vector3 EndDragPosition = Vector3.zero;
+    private Vector3 EndDragPosition { get; set; } = Vector3.zero;
     private Vector3 EndWorldPosition;
     //Flag for if the mouse is dragging for objects to select
     private bool isDragging = false;
-    private GameObject HitObject;
+    //private GameObject HitObject;
     private Rect DrawBox;
     private List<GameObject> SelectedObjects = new List<GameObject>();
 
@@ -42,12 +44,22 @@ public class CameraController : MonoBehaviour
 
     //UISystem for communicating to the UI for what to display
     public UISystem PlayerUI;
+    ////Graphics Raycaster from the Player UI
+    //public GraphicRaycaster PlayerGR;
+    ////Event System from the Scene
+    //public EventSystem SceneEventSystem;
     private bool isPatrolling;//The flag for right clicks to register as a patrol or a single move order
+    private LinkedList<Vector3> PatrolPositions;//LinkedList for if the unit(s) is patroling between a set of locations
+    private bool UIFlag = false;//Flag for when a UI element is pressed
     void Start()
     {
+        Debug.Log("Message: Create Squad GameObject with all the SelectedObjects in SquadCreation Function");
+        Debug.Log("Message: Create Functionality for a Double Click that will select all units within the camera screen");
+        Debug.Log("Message: Create Functionality for pressing a key to select all of a players units in the level");
         PlayerCamera = GetComponentInChildren<Camera>();
         selectionMesh = new Mesh();
         MarqueeCreation();
+        //SceneEventSystem = FindObjectOfType<EventSystem>();
     }
 
     private void MarqueeCreation()
@@ -64,10 +76,11 @@ public class CameraController : MonoBehaviour
         MouseClick();
         MouseDragging();
         MouseUnclick();
-        if (SelectedObjects.Count > 0)
-            CopySelectedObjects();
+        SquadCreation();
         UnitMove();
     }
+
+
     private void OnGUI()
     {
         if (isDragging)
@@ -144,7 +157,12 @@ public class CameraController : MonoBehaviour
             if (!isDragging)
             {
                 RaycastHit hit = RayCasting();
-
+                //List<RaycastResult> results = new List<RaycastResult>();
+                //GraphicRaycasting(results);
+                //foreach(RaycastResult rr in results)
+                //{
+                //    Debug.Log(rr.gameObject.name);
+                //}
                 //Logic for creating a squad for Units
                 if (hit.transform.gameObject.tag == "Unit")
                 {
@@ -182,12 +200,14 @@ public class CameraController : MonoBehaviour
                 //Logic for selecting multiple buldings of the same type(Work on later)
 
                 //Logic for selection all "Other" Game objects in the drawbox(Due Later)
-
                 //Logic for if the Player clicked their UI
-                else if (EventSystem.current.currentSelectedGameObject.tag == "UI")
+                else if (UIFlag)
+                {
                     Debug.Log("UI Clicked");//Do Nothing
+                    SetUIFlag(false);
+                }
                 //The Player clicked on the ground
-                else
+                else if (hit.transform.gameObject.tag == "Ground" && !UIFlag)/* (hit.transform.gameObject.tag == "Ground")*/
                 {
                     foreach (GameObject gm in SelectedObjects)
                         gm.GetComponent<UnitScript>().SetRing(false);
@@ -201,7 +221,6 @@ public class CameraController : MonoBehaviour
                 int i = 0;
                 EndDragPosition = Input.mousePosition;
                 EndWorldPosition = RayCasting().point;
-                //Debug.Log($"End of Dragging:{EndWorldPosition}");
 
                 //Getting the corners for the Marquee Drag
                 corners = GetBoundingBox(StartWorldPosition, EndWorldPosition);
@@ -257,16 +276,27 @@ public class CameraController : MonoBehaviour
             isDragging = false;
         }
     }
+    //Function is used to create a squad from all the selected objects and copies over the List to the UISystem
+    private void SquadCreation()
+    {
+        if (SelectedObjects.Count > 0)
+            CopySelectedObjects();
+    }
     private void UnitMove()
     {
         //If the SelectedObjects is not null and the first element is a Unit
         if (SelectedObjects.Count > 0 && SelectedObjects[0].tag == "Unit" && Input.GetMouseButtonDown(1))
         {
             RaycastHit hit = RayCasting();
+            if(isPatrolling)
+            {
+                PatrolPositions.AddLast(hit.point);
+            }
             foreach(GameObject unit in SelectedObjects)
                 unit.GetComponent<UnitScript>().SetGoalPoint(hit.point, true);
         }
     }
+    //Function that deals with teh camera position and the camera height from keyboard inputs.
     private void CameraMovement()
     {
         //Storing the position in a temp variable
@@ -303,6 +333,7 @@ public class CameraController : MonoBehaviour
         //Applying the position after taking user inputs
         transform.position = pos;
     }
+    //Function to get the RaycastHit for the camera
     private RaycastHit RayCasting()
     {
         //Perform Raycast to see if the mouse up is at a different point from the mousedown
@@ -312,6 +343,18 @@ public class CameraController : MonoBehaviour
         Physics.Raycast(ray, out hit, Mathf.Infinity);
         return hit;
     }
+    ////Function for the Graphics Raycast of the camera
+    //private void GraphicRaycasting(List<RaycastResult> results)
+    //{
+    //    //Create the PointerEventData with null for the EventSystem
+    //    PointerEventData ped = new PointerEventData(null);
+    //    //Set required parameters, in this case, mouse position
+    //    ped.position = Input.mousePosition;
+    //    //Create list to receive all results
+    //    results = new List<RaycastResult>();
+    //    //Raycast it
+    //    PlayerGR.Raycast(ped, results);
+    //}
     //create a bounding box (4 corners in order) from the start and end mouse position
     private Vector3[] GetBoundingBox(Vector3 p1, Vector3 p2)
     {
@@ -408,5 +451,9 @@ public class CameraController : MonoBehaviour
     public void CopySelectedObjects()
     {
         PlayerUI.CopySelectedObjects(SelectedObjects);
+    }
+    public void SetUIFlag(bool flag)
+    {
+        UIFlag = flag;
     }
 }

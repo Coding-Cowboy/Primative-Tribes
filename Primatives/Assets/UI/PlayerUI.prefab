@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6964472897674310832}
   - component: {fileID: 3735265228268426389}
   - component: {fileID: 434349839923214692}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TabText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 1238051866829967418}
   - component: {fileID: 1238051866829967419}
   - component: {fileID: 8878934249758546087}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ResoursesPanel
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238051866829967557}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &1238051866829967419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.60784316, g: 0.49803925, b: 0, a: 0.19607843}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -244,7 +244,8 @@ GameObject:
   - component: {fileID: 1238051866838307079}
   - component: {fileID: 1593871168867359581}
   - component: {fileID: 5701664867691096791}
-  m_Layer: 5
+  - component: {fileID: 7465598242709545970}
+  m_Layer: 0
   m_Name: Footer
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -295,7 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.8196079, b: 0, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -357,6 +358,35 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &7465598242709545970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238051866838307073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8112990051252548954, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+          m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+          m_MethodName: SetUIFlag
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
 --- !u!1 &1238051867069707076
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +401,8 @@ GameObject:
   - component: {fileID: 1238051867069706943}
   - component: {fileID: 1238051867069706936}
   - component: {fileID: 7385350448761288837}
-  m_Layer: 5
+  - component: {fileID: 664616334068510501}
+  m_Layer: 0
   m_Name: Header
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -420,7 +451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.11764707, g: 0.03529412, b: 0.41960788, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -494,6 +525,35 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &664616334068510501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238051867069707076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8112990051252548954, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+          m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+          m_MethodName: SetUIFlag
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
 --- !u!1 &1238051867277875878
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,12 +564,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1238051867277875877}
   - component: {fileID: 1238051867277875867}
-  - component: {fileID: 1238051867277875876}
   - component: {fileID: 9086065752453794021}
   - component: {fileID: 3605362436334388080}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Body
-  m_TagString: UI
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -541,37 +600,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238051867277875878}
-  m_CullTransparentMesh: 0
---- !u!114 &1238051867277875876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1238051867277875878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_CullTransparentMesh: 1
 --- !u!114 &9086065752453794021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,7 +659,7 @@ GameObject:
   - component: {fileID: 1238051867562136623}
   - component: {fileID: 1238051867562136616}
   - component: {fileID: 1238051867562136617}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -678,7 +707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.28235295, g: 0.65882355, b: 0.70980394, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -760,9 +789,9 @@ GameObject:
   - component: {fileID: 1238051868526243147}
   - component: {fileID: 1238051868526243145}
   - component: {fileID: 1238051868526243146}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ResoursesPane
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -793,7 +822,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238051868526243156}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &1238051868526243146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -893,7 +922,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1238051868598393444}
   - component: {fileID: 1238051868598393435}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlayerUI
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -961,7 +990,7 @@ GameObject:
   - component: {fileID: 1238051868614563700}
   - component: {fileID: 1238051868614563701}
   - component: {fileID: 1238051868614563702}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -999,16 +1028,16 @@ Canvas:
   m_GameObject: {fileID: 1238051868614563696}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 1
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -2061997719
+  m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &1238051868614563700
@@ -1088,7 +1117,8 @@ GameObject:
   - component: {fileID: 4495278646874268105}
   - component: {fileID: 2523872575171237383}
   - component: {fileID: 9536231684636738}
-  m_Layer: 5
+  - component: {fileID: 8144347239610153831}
+  m_Layer: 0
   m_Name: ImageTab
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -1137,7 +1167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 749b9069dc4742c5bfa5c74644049926, type: 2}
   m_Color: {r: 0.43921572, g: 0.3529412, b: 0.7686275, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1208,6 +1238,35 @@ MonoBehaviour:
           m_StringArgument: ImageTab
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8144347239610153831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569356149149756884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8112990051252548954, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+          m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+          m_MethodName: SetUIFlag
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
 --- !u!1 &2371882749953252128
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,7 +1278,7 @@ GameObject:
   - component: {fileID: 3849059623725885449}
   - component: {fileID: 6021918445668612514}
   - component: {fileID: 6711116928836451399}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -1357,7 +1416,8 @@ GameObject:
   - component: {fileID: 7423228710546409137}
   - component: {fileID: 6797939784950976181}
   - component: {fileID: 6727016385720141820}
-  m_Layer: 5
+  - component: {fileID: 6988954884238857632}
+  m_Layer: 0
   m_Name: UnitActionsPanel
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -1406,7 +1466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.60784316, g: 0.2901961, b: 0, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1466,6 +1526,35 @@ MonoBehaviour:
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &6988954884238857632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359415980326477866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8112990051252548954, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+          m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+          m_MethodName: SetUIFlag
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
 --- !u!1 &5385711579450596039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,7 +1567,8 @@ GameObject:
   - component: {fileID: 9074534601167494716}
   - component: {fileID: 2737130359238374317}
   - component: {fileID: 5365200419024721814}
-  m_Layer: 5
+  - component: {fileID: 6719152859300079087}
+  m_Layer: 0
   m_Name: UnitPatrol
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -1598,6 +1688,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6719152859300079087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5385711579450596039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8112990051252548954, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+          m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+          m_MethodName: SetUIFlag
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
 --- !u!1 &5615397711576957006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1610,7 +1729,7 @@ GameObject:
   - component: {fileID: 1261176976424304585}
   - component: {fileID: 3176075813707621003}
   - component: {fileID: 3163393258020319507}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Panel
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -1659,7 +1778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.003921569, g: 0.3254902, b: 0.37254903, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1707,7 +1826,8 @@ GameObject:
   - component: {fileID: 2929489949230957475}
   - component: {fileID: 3210532686349926329}
   - component: {fileID: 4648925969866341921}
-  m_Layer: 5
+  - component: {fileID: 3430285665662044339}
+  m_Layer: 0
   m_Name: Tab_2
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -1756,7 +1876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 749b9069dc4742c5bfa5c74644049926, type: 2}
   m_Color: {r: 0.11764707, g: 0.03529412, b: 0.41960788, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1815,6 +1935,35 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3430285665662044339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5640150040193180434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8112990051252548954, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+          m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+          m_MethodName: SetUIFlag
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
 --- !u!1 &6673989087748347366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,7 +1976,7 @@ GameObject:
   - component: {fileID: 2725752395676159461}
   - component: {fileID: 556417109930706183}
   - component: {fileID: 2522344557893630636}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SelectedObjectsList
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -1875,7 +2024,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.60784316, g: 0.2901961, b: 0, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1922,7 +2071,7 @@ GameObject:
   - component: {fileID: 4033860951399218308}
   - component: {fileID: 411313495321683059}
   - component: {fileID: 3879167501869847656}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TabText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2056,7 +2205,7 @@ GameObject:
   - component: {fileID: 4987340912363173019}
   - component: {fileID: 6242778501609259300}
   - component: {fileID: 5069901395113694473}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -2192,7 +2341,8 @@ GameObject:
   - component: {fileID: 2805637959343562985}
   - component: {fileID: 2346544962123386237}
   - component: {fileID: 975576461312188314}
-  m_Layer: 5
+  - component: {fileID: 4968828529272406369}
+  m_Layer: 0
   m_Name: InfoTab
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -2305,6 +2455,35 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &4968828529272406369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7698108656476964611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8112990051252548954, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+          m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+          m_MethodName: SetUIFlag
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
 --- !u!1 &7958103945104410443
 GameObject:
   m_ObjectHideFlags: 0
@@ -2318,7 +2497,8 @@ GameObject:
   - component: {fileID: 3744319997833369683}
   - component: {fileID: 2903573488388528331}
   - component: {fileID: 2678278181933685290}
-  m_Layer: 5
+  - component: {fileID: 7306147154697724825}
+  m_Layer: 0
   m_Name: SelectedObjectInfo
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -2430,6 +2610,35 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &7306147154697724825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7958103945104410443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8112990051252548954, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+          m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+          m_MethodName: SetUIFlag
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
 --- !u!1 &8864862125496657488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2441,7 +2650,7 @@ GameObject:
   - component: {fileID: 5588233780614787455}
   - component: {fileID: 5667568958448691218}
   - component: {fileID: 3089075550136594421}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TabText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2576,7 +2785,8 @@ GameObject:
   - component: {fileID: 7914365703212019871}
   - component: {fileID: 2597197121223400008}
   - component: {fileID: 2949319250901840881}
-  m_Layer: 5
+  - component: {fileID: 1973686616529139094}
+  m_Layer: 0
   m_Name: InfoTab
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -2625,7 +2835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 749b9069dc4742c5bfa5c74644049926, type: 2}
   m_Color: {r: 0.20784315, g: 0.08235294, b: 0.6901961, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2696,3 +2906,32 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1973686616529139094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9150075908493464131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8112990051252548954, guid: 8715c5d70ab8f614bbd700b54836d49e, type: 3}
+          m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+          m_MethodName: SetUIFlag
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2

@@ -40,7 +40,7 @@ public class UISystem : MonoBehaviour
     {
         UnitButtonEnabler(false);
         SelectedObjects = new List<GameObject>();
-        Debug.Log("Make an Image display the Camera Render to allow the full camera to be seen in the Body");
+        Debug.Log("Rework UI design to look more modern like Halo Wars without discarding the UI mechanics of AOE");
         SelectedPanelType = PanelType.Image;
     }
 
@@ -74,6 +74,7 @@ public class UISystem : MonoBehaviour
         foreach (GameObject Object in SelectedObjects)
             this.SelectedObjects.Add(Object);
     }
+    //Function for displaying the Object information for switching tabs of the Middle-Bottom Tab for the Image, Info, and Description
     public void TabClicked(int type)
     {
         PanelType Type = (PanelType)type;
@@ -120,15 +121,21 @@ public class UISystem : MonoBehaviour
     {
         foreach(Button button in UnitButtons)
         {
-            button.enabled = flag;
+            button.interactable = flag;
         }
     }
     public void UnitPatrol()
     {
         if (!isPatrolling)
+        {
             isPatrolling = true;
+            //Enable the flag for the CameraController
+        }
         else
+        {
             isPatrolling = false;
-        Debug.Log(isPatrolling);
+            //Disable the flag for the CameraController and set the List of Units to patrol
+
+        }
     }
 }
