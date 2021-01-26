@@ -49,7 +49,7 @@ public class CameraController : MonoBehaviour
     ////Event System from the Scene
     //public EventSystem SceneEventSystem;
     private bool isPatrolling;//The flag for right clicks to register as a patrol or a single move order
-    private LinkedList<Vector3> PatrolPositions;//LinkedList for if the unit(s) is patroling between a set of locations
+    private LinkedList<Vector3> PatrolPositions = new LinkedList<Vector3>();//LinkedList for if the unit(s) is patroling between a set of locations
     private bool UIFlag = false;//Flag for when a UI element is pressed
     void Start()
     {
@@ -181,7 +181,7 @@ public class CameraController : MonoBehaviour
                             {
                                 foreach (GameObject gm in SelectedObjects)
                                     gm.GetComponent<UnitScript>().SetRing(false);
-                                SelectedObjects.Clear();
+                                ClearSelectionVariables();
                                 SelectedObjects.Add(hit.transform.gameObject);
                             }
                         }
@@ -191,7 +191,7 @@ public class CameraController : MonoBehaviour
                     {
                         foreach (GameObject gm in SelectedObjects)
                             gm.GetComponent<UnitScript>().SetRing(false);
-                        SelectedObjects.Clear();
+                        ClearSelectionVariables();
                         SelectedObjects.Add(hit.transform.gameObject);
                         hit.transform.gameObject.GetComponent<UnitScript>().SetRing(true);
                     }
@@ -211,7 +211,7 @@ public class CameraController : MonoBehaviour
                 {
                     foreach (GameObject gm in SelectedObjects)
                         gm.GetComponent<UnitScript>().SetRing(false);
-                    SelectedObjects.Clear();
+                    ClearSelectionVariables();
                 }
             }
             //Else if the player is still dragging
@@ -267,7 +267,7 @@ public class CameraController : MonoBehaviour
                     foreach(GameObject gm in SelectedObjects)
                         gm.GetComponent<UnitScript>().SetRing(false);
 
-                    SelectedObjects.Clear();
+                    ClearSelectionVariables();
                 }
                 //Clear the selection box
                 Destroy(selectionBox, 0.02f);
@@ -292,11 +292,33 @@ public class CameraController : MonoBehaviour
             {
                 PatrolPositions.AddLast(hit.point);
             }
-            foreach(GameObject unit in SelectedObjects)
-                unit.GetComponent<UnitScript>().SetGoalPoint(hit.point, true);
+            else
+                foreach(GameObject unit in SelectedObjects)
+                    unit.GetComponent<UnitScript>().SetGoalPoint(hit.point, true);
         }
     }
-    //Function that deals with teh camera position and the camera height from keyboard inputs.
+    //This function is called when the user clicks on the patrol button again, which tells the unit(s) to stop taking in points for the patrol.
+    public void EndPatrol()
+    {
+        foreach (GameObject unit in SelectedObjects)
+        {
+            //Clear the previous patrol from each of the units
+            unit.GetComponent<UnitScript>().ClearPatrol();
+            foreach (Vector3 point in PatrolPositions)
+                unit.GetComponent<UnitScript>().SetPatrol(point);
+        }
+        //Clears the PatrolPositions after every EndPatrol to keep the points from being saved into the next patrol.
+        PatrolPositions.Clear();
+    }
+    //Function is for clearing all things that can be set with selection
+    private void ClearSelectionVariables()
+    {
+        //Clear the SelectedObjects
+        SelectedObjects.Clear();
+        //Clear the Patrol Points
+        PatrolPositions.Clear();
+    }
+    //Function that deals with the camera position and the camera height from keyboard inputs.
     private void CameraMovement()
     {
         //Storing the position in a temp variable
@@ -343,18 +365,6 @@ public class CameraController : MonoBehaviour
         Physics.Raycast(ray, out hit, Mathf.Infinity);
         return hit;
     }
-    ////Function for the Graphics Raycast of the camera
-    //private void GraphicRaycasting(List<RaycastResult> results)
-    //{
-    //    //Create the PointerEventData with null for the EventSystem
-    //    PointerEventData ped = new PointerEventData(null);
-    //    //Set required parameters, in this case, mouse position
-    //    ped.position = Input.mousePosition;
-    //    //Create list to receive all results
-    //    results = new List<RaycastResult>();
-    //    //Raycast it
-    //    PlayerGR.Raycast(ped, results);
-    //}
     //create a bounding box (4 corners in order) from the start and end mouse position
     private Vector3[] GetBoundingBox(Vector3 p1, Vector3 p2)
     {
@@ -455,5 +465,9 @@ public class CameraController : MonoBehaviour
     public void SetUIFlag(bool flag)
     {
         UIFlag = flag;
+    }
+    public void SetisPatrolling(bool flag)
+    {
+        isPatrolling = flag;
     }
 }

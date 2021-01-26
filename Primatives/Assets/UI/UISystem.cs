@@ -130,12 +130,14 @@ public class UISystem : MonoBehaviour
         {
             isPatrolling = true;
             //Enable the flag for the CameraController
+            PlayerCamScript.SetisPatrolling(isPatrolling);
         }
         else
         {
             isPatrolling = false;
             //Disable the flag for the CameraController and set the List of Units to patrol
-
+            PlayerCamScript.SetisPatrolling(isPatrolling);
+            PlayerCamScript.EndPatrol();
         }
     }
 }

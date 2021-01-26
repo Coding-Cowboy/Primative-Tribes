@@ -158,6 +158,7 @@ public class UnitScript : MonoBehaviour
     public void ClearPatrol()
     {
         this.PatrolPositions.Clear();
+        this.GoalPosition = gameObject.transform.position;
     }
     public void SetGoalPoint(Vector3 NewPosition, bool isNotPatrol)
     {
