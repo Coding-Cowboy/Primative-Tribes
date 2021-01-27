@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -100,7 +101,7 @@ public class UnitScript : MonoBehaviour
     private ObjectScript InfoSystem;//Variable of the parent
     public Info UnitInfo;//Information about Unit from the ObjectInfoSystem
     public GameManager GM;//GameManager for the Game
-    public State CurrentState;
+    public State CurrentState;//Current state of the Unit
     public enum State { WAITING, FLEEING, MOVING, PATROLING, GATHERING, FIGHTING, BUILDING, DYING };//States that a unit can be in in the game.
     private Vector3 CurrentPosition;//Current Location of the object
     private Vector3 GoalPosition;//Location that the unit is moving to
@@ -124,41 +125,69 @@ public class UnitScript : MonoBehaviour
         float Speed = UnitInfo.GetFloat("MovementSpeed");
         Agent.speed = Speed > -1.0f ? Speed : 2.5f;//Checks to see if the speed is not 0.0f and sets the agent speed to that value
         SelectionRing.SetActive(false);
-    }
 
+        //Set the state machine to WAITING at start as any function that sets movement will set the state machine.
+        CurrentState = State.WAITING;
+    }
     // Update is called once per frame
     void Update()
     {
-        Timer -= Time.deltaTime;
         //Get Current Position
         CurrentPosition = transform.position;
-        //Check to see if the unit has hit the goal position for the patrol
-        if (PositionsEqual(CurrentPosition, GoalPosition))
+        //Switch for the state machine
+        switch(CurrentState)
         {
-            FollowPatrol();
-            //Checks to see if 1 second has passed to call the EnemyInSights function of the GameManager
-            
+            case State.WAITING:
+                WaitingState();
+                break;
+            case State.FLEEING:
+                Debug.Log($"State: {CurrentState}. Run For the Hills");
+                break;
+            case State.MOVING:
+                MovingState();
+                break;
+            case State.PATROLING:
+                PatrolingState();
+                break;
+            case State.GATHERING:
+                Debug.Log($"State: {CurrentState}. Run For the Hills");
+                break;
+            case State.FIGHTING:
+                Debug.Log($"State: {CurrentState}. Run For the Hills");
+                break;
+            case State.BUILDING:
+                Debug.Log($"State: {CurrentState}. Run For the Hills");
+                break;
+            case State.DYING:
+                Debug.Log($"State: {CurrentState}. Run For the Hills");
+                break;
         }
-        if (Timer < 0.0f)//add if the state is waiting or patrolling
-        {
-            //Debug.Log("Timer");
-            Timer = 1f;
-        }
+        if (NearestEnemy != null)
+            Debug.Log("Persuing Enemy");
+        PatrolingState();
         //Setting the destination of the navmeshagent to the GoalPosition
         //Also setting the values for movement and looking distance
         Agent.destination = GoalPosition;
         Agent.speed = Agent.speed * SpeedMultiplier;
 
     }
+
+    
+
     //Function to call every time a unit is selected and has a patrol to add to the array.
     public void SetPatrol(Vector3 NewPosition)
     {
         this.PatrolPositions.AddLast(NewPosition);//Always add to end so that we can iterate through when doing a patrol
+        //Set the state of Unit to State.PATROLING
+        CurrentState = State.PATROLING;
     }
     public void ClearPatrol()
     {
         this.PatrolPositions.Clear();
         this.GoalPosition = gameObject.transform.position;
+
+        //Set the state to Waiting if the patrol is removed
+        CurrentState = State.WAITING;
     }
     public void SetGoalPoint(Vector3 NewPosition, bool isNotPatrol)
     {
@@ -166,7 +195,6 @@ public class UnitScript : MonoBehaviour
         //Sets the state to Moving if not in PATROLING state
         if (isNotPatrol)
             CurrentState = State.MOVING;
-
     }
     public Vector3 GetCurrentPosition()
     {
@@ -209,18 +237,66 @@ public class UnitScript : MonoBehaviour
     {
         UnitInfo.SetTeam(Team);
     }
-    private void WaitingState()
+    public void SetNearestEnemy(GameObject NearestEnemy)
     {
-        //only scan to see if there are nearby enemies
-        NearestEnemy = GM.GetNearestEnemy(UnitInfo.Team, UnitInfo.GetFloat("LookDistance"), CurrentPosition);
-        if (NearestEnemy != null)
-            //Go to the Moving State(and then the fighting state)
-            Debug.Log("Found Enemy");
+        this.NearestEnemy = NearestEnemy;
+        //Sets state to the Moving state to move to the Nearest Enemies position every time.
+        CurrentState = State.MOVING;
     }
     public void SetRing(bool state)
     {
         SelectionRing.SetActive(state);
 
     }
+    private void WaitingState()
+    {
+        if (CurrentState == State.PATROLING)//add if the state is waiting or patrolling
+        {
+            //Decreasing timer if they are in these two states
+            Timer -= Time.deltaTime;
 
+            if (Timer < 0.0f)
+            {
+                //Find nearest enemy
+                NearestEnemy = GM.GetNearestEnemy(this.UnitInfo.Team, UnitInfo.GetFloat("LookDistance"), CurrentPosition);
+                //Reset timer 
+                if (NearestEnemy != null)
+                    //Go to the Moving State(and then the fighting state)
+                    SetNearestEnemy(NearestEnemy);//Redundant but creates a single point failure for any issues with setting the enemy and state.
+                Timer = 1f;
+            }
+        }
+    }
+    private void PatrolingState()
+    {
+        //Check to see if the unit has hit the goal position for the patrol
+        if (PositionsEqual(CurrentPosition, GoalPosition))
+        {
+            FollowPatrol();
+            //Checks to see if 1 second has passed to call the EnemyInSights function of the GameManager
+
+        }
+        if (CurrentState == State.PATROLING)//add if the state is waiting or patrolling
+        {
+            //Decreasing timer if they are in these two states
+            Timer -= Time.deltaTime;
+
+            if (Timer < 0.0f)
+            {
+                //Find nearest enemy
+                NearestEnemy = GM.GetNearestEnemy(this.UnitInfo.Team, UnitInfo.GetFloat("LookDistance"), CurrentPosition);
+                if (NearestEnemy != null)
+                    //Go to the Moving State(and then the fighting state)
+                    SetNearestEnemy(NearestEnemy);//Redundant but creates a single point failure for any issues with setting the enemy and state.
+                //Reset timer 
+                Timer = 1f;
+            }
+        }
+    }
+    private void MovingState()
+    {
+        //if the GoalPosition has been reached and the NearestEnemy has been set.
+        if (PositionsEqual(CurrentPosition, GoalPosition) && NearestEnemy == null)
+            CurrentState = State.WAITING;
+    }
 }
