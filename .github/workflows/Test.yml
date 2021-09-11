@@ -1,4 +1,4 @@
-name: Test project
+name: Test project 
 
 on: [push, pull_request]
 
@@ -9,6 +9,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        projectPath:
+          - Primative-Tribes
         testMode:
           - playmode
           - editmode
