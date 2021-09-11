@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         projectPath:
-          - Primative-Tribes
+          - Primatives
         testMode:
           - playmode
           - editmode
