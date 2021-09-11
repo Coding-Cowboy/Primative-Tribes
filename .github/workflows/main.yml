@@ -28,7 +28,13 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
+          #projectPath: path/to/your/project
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: Test results
+          path: artifacts
 
       # Build
       - name: Build project
@@ -39,6 +45,10 @@ jobs:
           targetPlatform: 
           - StandaloneWindows64 # Build a Windows 64-bit standalone.
           - StandaloneLinux64 # Build a Linux 64-bit standalone.
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: build
 
       # Output
       - uses: actions/upload-artifact@v2
