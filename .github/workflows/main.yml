@@ -13,6 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        projectPath:
+          - Primatives
         testMode:
           - EditMode
           - PlayMode
@@ -39,19 +41,19 @@ jobs:
         uses: actions/cache@v2
         with:
           path: Library
-          key: Library-test-project-${{ matrix.targetPlatform }}
+          key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}
           restore-keys: |
-            Library-test-project-
+            Library-Primative-Tribes-
             Library-
       - uses: game-ci/unity-test-runner@v2.0-alpha-5
         #id: testRunner
         with:
           testMode: ${{ matrix.testMode }}
           checkName: ${{ matrix.testMode }} test results
-          unityVersion: auto
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/upload-artifact@v2
+        if: always()
         with:
           name: Test results (${{ matrix.testMode }})
           path: ${{ steps.testRunner.outputs.artifactsPath }}
